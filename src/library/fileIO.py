@@ -90,21 +90,30 @@ def create_streams_csv(logging=0):
     streams_df = pd.DataFrame()
     for f in stream_logs:
         with open(os.path.join(paths['extended_gdpr'], f) , 'r', encoding="UTF-8") as j:
-            print(f'Loading {f}....')
+            print(f'Reading {f}....')
             stream_log = json.load(j)
             stream_log_cleaned = clean_json(stream_log, ohe_dicts)
             # print(type(stream_log_cleaned))
             prepped_df = pd.DataFrame.from_dict(stream_log_cleaned)
             streams_df = pd.concat([prepped_df, streams_df], ignore_index=True) if not streams_df.empty else prepped_df
 
+
     # Save the one hot encodings 
+    print('Saving one hot encoding information...')
     for key in ohe_dicts.keys():
         save_ohe( ohe_dicts[key], get_ohe_fp(key) )
 
-    print('One of the OHEs:')
-    print(str(ohe_dicts['reason_start']))
+    print('Sorting streams data...')
+    streams_df.sort_values(by='ts', inplace=True)
     streams_df.to_csv(paths['streams_csv'])
+    print(f"All JSON files have been read and added to a csv, located at {paths['streams_csv']}")
+
+
+# def sort
 
 
 def load_streams_df():    
     return pd.read_csv(paths['streams_csv'])
+
+
+
