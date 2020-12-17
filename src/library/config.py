@@ -8,18 +8,18 @@
 
 import os, sys
 
-# Very clearly, this is poorly done.
-# TODO: revise this code to use more dynamic approaches. Wont work when I switch to my laptop
 ROOT = os.getcwd()
 
 paths = {
     'base': os.path.join(ROOT),
     'data':  os.path.join(ROOT, 'src', 'data'),
     'ohe':   os.path.join(ROOT, 'src', 'data', 'OHE'),
+    'stats':   os.path.join(ROOT, 'src', 'data', 'stats'),
     'streams_csv' : os.path.join(ROOT, 'src', 'data', 'streams.csv'),
     'extended_gdpr':  os.path.join(ROOT, 'src', 'data', 'extendedGDPR'),
     'gdpr':  os.path.join(ROOT, 'src', 'data', 'baseGDPR'),
 }
+
 
 ohe_columns = [
     'platform',
@@ -29,7 +29,6 @@ ohe_columns = [
     'reason_end',
     'episode_show_name'
 ]
-
 
 
 drop_columns = [
