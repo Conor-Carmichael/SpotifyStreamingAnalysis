@@ -5,6 +5,10 @@
 
 '''
 
+# from src.library.config import weekdays, months, seasons
+import src.library.config as cfg 
+
+
 def get_window(df, col, start, end):
     # From start, through end.
     assert end > =start, "Error in start, end args. Start is greater than end value."
@@ -15,31 +19,27 @@ def get_window(df, col, start, end):
         return df[ (df[col] >= start) & (df[col] < end) ]
 
 
-def get_weekday(df, day):
-    if day.title() in weekdays:
-        return df[ df['date'].weekday() == day ]
-    elif day.lower() == 'all':
-        # case may be day == all
-        return df
-
-    else:
-        print("Unhandled case.")
-        return None
+# def filter_by(df, col, )
 
 
-def get_first_n_listens(df, col, value, n=10):
+def get_weekday(df, day:str):
+
+    assert day.title() in cfg.weekdays or day.lower() == 'all', \
+    f"day argument must be 'all' or one of the following, {str(weekdays)}"
+
+    return df[ df['date'].weekday() == day ]
+
+
+def get_first_n_listens(df, col:str, name:str, n=10):
     # Assumes df is sorted, as that is how I store it.
+    return None
+
+
+def apply_listen_length_threshold(df, threshold:float, key='secPlayed'):
+    assert threshold > 0, "Threshold less than or equal to 0."
+    assert df[key].max() > threshold , f"Threshold value must be less than the max listen length in the dataframe, {max_thresh}"
     
-
-
-def apply_listen_length_threshold(df, threshold, key='secPlayed'):
-    
-    if threshold >= 0.0 and threshold < df[key].max():
-        return df[ (df[key ] >= threshold) ]
-    else:
-        print(f"Error in threshold argument: threshold value of {threshold} is either less than/equal to 0.0, or is greater than the max {key} value.")
-        return None
-
+    return df[ (df[key ] >= threshold) ]
 
     
 def stats_by_track(df, skip_thresh=30):
