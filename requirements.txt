@@ -3,3 +3,5 @@ numpy
 altair
 altair_viewer
 altair_saver
+spotipy
+streamlit
