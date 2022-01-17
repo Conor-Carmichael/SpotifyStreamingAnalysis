@@ -7,7 +7,7 @@ from src.settings import DROP_COLS
 class StreamHistory:
 
     """
-    Class to represent a single stream logging file, handles ingestion, preprocessing and cleaning.
+    Class to represent stream log files, handles ingestion, preprocessing and cleaning.
     """
 
     def __init__(
@@ -22,6 +22,7 @@ class StreamHistory:
         # Take in data
         logger.info(f"Loading {self.data_paths}")
         data = pd.concat([pd.read_json(f) for f in self.data_paths])
+        self.username = data['username'].values[0]
         ## Clean/process values ##
         # Change date storage type
         apply_fn = lambda row: split_endtime(row["ts"])
